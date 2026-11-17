@@ -2,7 +2,7 @@ package com.tarento.commenthub.exception;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -16,6 +16,7 @@ public class CommentException extends RuntimeException{
     private Integer httpStatusCode;
     private Map<String, String> errors;
 
+    @Autowired
     public CommentException() {
     }
 

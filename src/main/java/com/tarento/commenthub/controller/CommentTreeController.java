@@ -3,10 +3,8 @@ package com.tarento.commenthub.controller;
 import com.tarento.commenthub.constant.Constants;
 import com.tarento.commenthub.dto.ApiResponse;
 import com.tarento.commenthub.dto.CommentTreeIdentifierDTO;
-import com.tarento.commenthub.dto.SearchCriteria;
 import com.tarento.commenthub.service.CommentTreeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class CommentTreeController {
 
-  @Autowired
-  CommentTreeService commentTreeService;
+  private final CommentTreeService commentTreeService;
+
+  public CommentTreeController(CommentTreeService commentTreeService) {
+    this.commentTreeService = commentTreeService;
+  }
 
   @GetMapping("/health")
   public String healthCheck() {
@@ -29,7 +30,7 @@ public class CommentTreeController {
   }
 
   @PostMapping("/get")
-  public ResponseEntity<?> search(@RequestBody CommentTreeIdentifierDTO commentTreeIdentifierDTO) {
+  public ResponseEntity<ApiResponse> search(@RequestBody CommentTreeIdentifierDTO commentTreeIdentifierDTO) {
     ApiResponse response = commentTreeService.getCommentTree(commentTreeIdentifierDTO);
     if (response.getResponseCode().equals(HttpStatus.NOT_FOUND) && response.getResult().isEmpty()) {
       return new ResponseEntity<>(response, HttpStatus.OK);

@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,12 +31,14 @@ public class CommentTreeServiceImpl implements CommentTreeService {
   @Value("${jwt.secret.key}")
   private String jwtSecretKey;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-  @Autowired
-  private CommentTreeRepository commentTreeRepository;
+  private final CommentTreeRepository commentTreeRepository;
 
+  public CommentTreeServiceImpl(ObjectMapper objectMapper, CommentTreeRepository commentTreeRepository) {
+    this.objectMapper = objectMapper;
+    this.commentTreeRepository = commentTreeRepository;
+  }
 
 
   public static JsonNode findTargetNode(JsonNode currentNode, String[] hierarchyPath, int index) {
