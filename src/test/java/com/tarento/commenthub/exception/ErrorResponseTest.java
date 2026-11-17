@@ -33,8 +33,8 @@ class ErrorResponseTest {
     assertEquals(first, second);
     assertEquals(first.hashCode(), second.hashCode());
     assertNotEquals(first, different);
-    assertNotEquals(first, null);
-    assertNotEquals(first, "not-an-error-response");
+    assertNotEquals(null, first);
+    assertNotEquals("not-an-error-response", first);
     assertEquals(first, first);
   }
 
